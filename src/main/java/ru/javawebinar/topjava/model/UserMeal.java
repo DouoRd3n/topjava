@@ -15,17 +15,19 @@ public class UserMeal {
         return caloriesGropedPerDay;
     }
 
-    private static Map<Integer, Integer> caloriesGropedPerDay;
+    private static Map<Integer, Integer> caloriesGropedPerDay = new HashMap<>();
 
     public UserMeal(LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
-        if (caloriesGropedPerDay==null){
-            caloriesGropedPerDay = new HashMap<>();
+        if (caloriesGropedPerDay.get(dateTime.getDayOfMonth())==null){
+
             caloriesGropedPerDay.put(dateTime.getDayOfMonth(), calories);
+        } else {
+            caloriesGropedPerDay.put(dateTime.getDayOfMonth(), caloriesGropedPerDay.get(dateTime.getDayOfMonth())+calories);
         }
-        caloriesGropedPerDay.put(dateTime.getDayOfMonth(), caloriesGropedPerDay.get(dateTime.getDayOfMonth())+calories);
+
     }
 
     public LocalDateTime getDateTime() {

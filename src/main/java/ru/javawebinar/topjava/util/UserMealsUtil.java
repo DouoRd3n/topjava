@@ -12,10 +12,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UserMealsUtil {
-//    private static   Map<Integer,Integer> caloriesGropedByDay;
+
 
 
     public static void main(String[] args) {
@@ -28,7 +27,7 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
         );
-//caloriesGropedByDay = gropedForDay(meals);
+
 
 
 //        List<UserMealWithExcess> mealsTo = filteredByCycles(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
@@ -40,14 +39,15 @@ public class UserMealsUtil {
 
     }
 
-//    private static Map<Integer, Integer> gropedForDay(List<UserMeal> meals) {
-//        return meals.stream()
-//                .collect(Collectors.groupingBy(um -> um.getDateTime().getDayOfMonth(), Collectors.summingInt(userMeal -> userMeal.getCalories())));
-//    }
+    private static Map<Integer, Integer> gropedForDay(List<UserMeal> meals) {
+        return meals.stream()
+                .collect(Collectors.groupingBy(um -> um.getDateTime().getDayOfMonth(), Collectors.summingInt(userMeal -> userMeal.getCalories())));
+    }
 
     private static boolean getExces(UserMeal um, int caloriesPerDay){
-      boolean excess =  UserMeal.getCaloriesGropedPerDay().get(um.getDateTime().getDayOfMonth())>caloriesPerDay;
-        return excess;
+        boolean excess = UserMeal.getCaloriesGropedPerDay().get(um.getDateTime().getDayOfMonth())>caloriesPerDay;
+     return  excess;
+
     }
 
 
@@ -58,9 +58,9 @@ public class UserMealsUtil {
 
         for (UserMeal um: meals) {
             if (TimeUtil.isBetweenHalfOpen(um.getDateTime().toLocalTime(), startTime,endTime)){
-                mealExcess.add(new UserMealWithExcess(um.getDateTime(),um.getDescription(),um.getCalories(),getExces(um, caloriesPerDay)));
+                mealExcess.add(new UserMealWithExcess(um.getDateTime(), um.getDescription(), um.getCalories(), getExces(um, caloriesPerDay)) );
             }
-            return mealExcess;
+
         }
 
 
@@ -88,6 +88,7 @@ public class UserMealsUtil {
                 .map(m -> new UserMealWithExcess(m.getDateTime(), m.getDescription(), m.getCalories(),
                         getExces(m, caloriesPerDay)))
                 .collect(Collectors.toList());
+
 
         return collect;
     }
