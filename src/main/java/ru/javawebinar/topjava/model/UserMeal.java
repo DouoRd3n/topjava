@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserMeal {
     private final LocalDateTime dateTime;
@@ -9,10 +11,21 @@ public class UserMeal {
 
     private final int calories;
 
+    public static Map<Integer, Integer> getCaloriesGropedPerDay() {
+        return caloriesGropedPerDay;
+    }
+
+    private static Map<Integer, Integer> caloriesGropedPerDay;
+
     public UserMeal(LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+        if (caloriesGropedPerDay==null){
+            caloriesGropedPerDay = new HashMap<>();
+            caloriesGropedPerDay.put(dateTime.getDayOfMonth(), calories);
+        }
+        caloriesGropedPerDay.put(dateTime.getDayOfMonth(), caloriesGropedPerDay.get(dateTime.getDayOfMonth())+calories);
     }
 
     public LocalDateTime getDateTime() {

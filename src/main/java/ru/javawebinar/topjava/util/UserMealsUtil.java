@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UserMealsUtil {
-    private static   Map<Integer,Integer> caloriesGropedByDay;
+//    private static   Map<Integer,Integer> caloriesGropedByDay;
 
 
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
         );
-caloriesGropedByDay = gropedForDay(meals);
+//caloriesGropedByDay = gropedForDay(meals);
 
 
 //        List<UserMealWithExcess> mealsTo = filteredByCycles(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
@@ -40,13 +40,13 @@ caloriesGropedByDay = gropedForDay(meals);
 
     }
 
-    private static Map<Integer, Integer> gropedForDay(List<UserMeal> meals) {
-        return meals.stream()
-                .collect(Collectors.groupingBy(um -> um.getDateTime().getDayOfMonth(), Collectors.summingInt(userMeal -> userMeal.getCalories())));
-    }
+//    private static Map<Integer, Integer> gropedForDay(List<UserMeal> meals) {
+//        return meals.stream()
+//                .collect(Collectors.groupingBy(um -> um.getDateTime().getDayOfMonth(), Collectors.summingInt(userMeal -> userMeal.getCalories())));
+//    }
 
     private static boolean getExces(UserMeal um, int caloriesPerDay){
-      boolean excess =  caloriesGropedByDay.get(um.getDateTime().getDayOfMonth())>caloriesPerDay;
+      boolean excess =  UserMeal.getCaloriesGropedPerDay().get(um.getDateTime().getDayOfMonth())>caloriesPerDay;
         return excess;
     }
 
